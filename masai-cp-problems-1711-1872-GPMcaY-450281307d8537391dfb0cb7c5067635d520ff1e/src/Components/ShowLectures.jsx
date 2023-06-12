@@ -1,4 +1,35 @@
+import React, { useEffect, useState } from 'react';
+import TableRow from './TableRow';
+
 const ShowLectures = () => {
+  const [lectures, setLectures] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures?_page=${currentPage}&_limit=5`)
+      .then((response) => {
+        // Get the total number of lectures from the response headers
+        const totalCount = response.headers.get('X-Total-Count');
+        setTotalPages(Math.ceil(totalCount / 5));
+        return response.json();
+      })
+      .then((data) => {
+        setLectures(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, [currentPage]);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
   return (
     <div className="show-lecture">
       <table>
@@ -13,8 +44,21 @@ const ShowLectures = () => {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>{/* Add lectures here */}</tbody>
+        <tbody>
+          {lectures.map((lecture) => (
+            <TableRow key={lecture.id} lecture={lecture} />
+          ))}
+        </tbody>
       </table>
+      <div className="pagination">
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <span>{`${currentPage} / ${totalPages}`}</span>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };

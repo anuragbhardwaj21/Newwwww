@@ -1,65 +1,59 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-function CreateLecture() {
-  const [{ inputData, setInputData }] = useState({
-    title: "",
-    category: "",
-    batch: "",
-    schedule: "",
-    conclude: "",
-    user: "",
+const CreateLecture = () => {
+  const [lectureData, setLectureData] = useState({
+    title: '',
+    category: '',
+    batch: '',
+    schedule: '',
+    conclude: '',
+    user: '',
   });
 
-  const handleSubmitt = (event) => {
-    event.preventDefault();
-    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(inputData),
-    })
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(lectureData),
+    };
+
+    fetch('http://localhost:8080/lectures', requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        setInputData({
-          title: "",
-          category: "",
-          batch: "",
-          schedule: "",
-          conclude: "",
-          user: "",
+        console.log('Lecture created:', data);
+        setLectureData({
+          title: '',
+          category: '',
+          batch: '',
+          schedule: '',
+          conclude: '',
+          user: '',
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error('Error:', error);
       });
   };
 
-  const handleCh = (event) => {
-    setInputData({ ...inputData, [event.target.name]: event.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLectureData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
     <div className="form">
-      <form onSubmit={handleSubmitt}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="titleInput">Title</label>
-          <input
-            type="text"
-            id="titleInput"
-            name="title"
-            value={inputData.title}
-            onChange={handleCh}
-          />
+          <input type="text" id="titleInput" name="title" value={lectureData.title} onChange={handleChange} required />
         </div>
         <div>
           <label htmlFor="categoryInput">Category:</label>
-          <select
-            id="categoryInput"
-            name="category"
-            value={inputData.category}
-            onChange={handleCh}
-          >
+          <select id="categoryInput" name="category" value={lectureData.category} onChange={handleChange} required>
             <option value="">Select Category</option>
             <option value="dsa">DSA</option>
             <option value="coding">Coding</option>
@@ -68,7 +62,7 @@ function CreateLecture() {
         </div>
         <div>
           <label htmlFor="batchInput">Batch:</label>
-          <select id="batchInput" name="batch" value={inputData.batch} onChange={handleCh}>
+          <select id="batchInput" name="batch" value={lectureData.batch} onChange={handleChange} required>
             <option value="">Select Batch</option>
             <option value="CAP-05">CAP-05</option>
             <option value="PT-WEB-16">PT-WEB-16</option>
@@ -79,15 +73,29 @@ function CreateLecture() {
         </div>
         <div>
           <label htmlFor="scheduleInput">Schedule:</label>
-          <input type="datetime-local" id="scheduleInput" name="schedule" value={inputData.schedule} onChange={handleCh}/>
+          <input
+            type="datetime-local"
+            id="scheduleInput"
+            name="schedule"
+            value={lectureData.schedule}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div>
           <label htmlFor="concludeInput">Concludes:</label>
-          <input type="datetime-local" id="concludeInput" name="conclude" value={inputData.conclude} onChange={handleCh}/>
+          <input
+            type="datetime-local"
+            id="concludeInput"
+            name="conclude"
+            value={lectureData.conclude}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div>
           <label htmlFor="userInput">User:</label>
-          <select id="userInput" name="user" value={inputData.user} onChange={handleCh}>
+          <select id="userInput" name="user" value={lectureData.user} onChange={handleChange} required>
             <option value="">Select User</option>
             <option value="user1">User 1</option>
             <option value="user2">User 2</option>
@@ -98,6 +106,6 @@ function CreateLecture() {
       </form>
     </div>
   );
-}
+};
 
 export default CreateLecture;
