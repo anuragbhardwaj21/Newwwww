@@ -1,41 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import TableRow from './TableRow';
+import React from 'react';
 
-const ShowLectures = () => {
-  const [lectures, setLectures] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    showLectures();
-  }, [currentPage]);
-
-  const showLectures = () => {
-    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures?_page=${currentPage}&_limit=5`)
-      .then((response) => {
-        // Get the total number of lectures from the response headers
-        const totalCount = response.headers.get('X-Total-Count');
-        setTotalPages(Math.ceil(totalCount / 5));
-        return response.json();
-      })
-      .then((data) => {
-        setLectures(data);
+const ShowLectures = ({ lectures, refreshLectures }) => {
+  const handleDelete = (id) => {
+    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures/${id}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        refreshLectures();
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-  };
-
-  const handlePreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handleRefreshLectures = () => {
-    showLectures();
   };
 
   return (
@@ -54,19 +29,22 @@ const ShowLectures = () => {
         </thead>
         <tbody>
           {lectures.map((lecture) => (
-            <TableRow key={lecture.id} lecture={lecture} refreshLectures={handleRefreshLectures} />
+            <tr key={lecture.id} className="table-row">
+              <td>{lecture.title}</td>
+              <td>{lecture.category}</td>
+              <td>{lecture.batch}</td>
+              <td>{lecture.schedule}</td>
+              <td>{lecture.conclude}</td>
+              <td>{lecture.user}</td>
+              <td>
+                <button className="bgRed" onClick={() => handleDelete(lecture.id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <span>{`${currentPage} / ${totalPages}`}</span>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div>
     </div>
   );
 };

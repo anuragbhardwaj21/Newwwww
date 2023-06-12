@@ -45,10 +45,38 @@ const CreateLecture = ({ refreshLectures }) => {
         console.error('Error:', error);
       });
   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(inputData),
+    };
+
+    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to create lecture');
+        }
+        refreshLectures();
+        setinputData({
+          title: '',
+          category: '',
+          batch: '',
+          schedule: '',
+          conclude: '',
+          user: '',
+        });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   return (
     <div className="form">
-      <form onSubmit={handleEnter}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="titleInput">Title</label>
           <input type="text" id="titleInput" name="title" value={inputData.title} onChange={handlenew} />
@@ -97,9 +125,9 @@ const CreateLecture = ({ refreshLectures }) => {
           <label htmlFor="userInput">User:</label>
           <select id="userInput" name="user" value={inputData.user} onChange={handlenew}>
             <option value="">Select User</option>
-            <option value="John">John</option>
-            <option value="Doe">Doe</option>
-            <option value="Jane">Jane</option>
+            <option value="User 1">User 1</option>
+            <option value="User 2">User 2</option>
+            <option value="User 3">User 3</option>
           </select>
         </div>
         <button type="submit">Create</button>
