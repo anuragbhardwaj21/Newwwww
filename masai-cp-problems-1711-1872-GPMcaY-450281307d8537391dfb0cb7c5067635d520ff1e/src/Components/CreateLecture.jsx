@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const CreateLecture = () => {
-  const [lectureData, setLectureData] = useState({
+const CreateLecture = ({ refreshLectures }) => {
+  const [inputData, setinputData] = useState({
     title: '',
     category: '',
     batch: '',
@@ -10,19 +10,29 @@ const CreateLecture = () => {
     user: '',
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(lectureData),
-    };
+  const handlenew = (event) => {
+    const { name, value } = event.target;
+    setinputData((previnputData) => ({
+      ...previnputData,
+      [name]: value,
+    }));
+  };
 
-    fetch('http://localhost:8080/lectures', requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Lecture created:', data);
-        setLectureData({
+  const handleEnter = (event) => {
+    event.preventDefault();
+
+    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputData),
+    })
+      .then((response) => {
+        console.log('Create Response:', response);
+        // Trigger a refresh of lectures after successful submission
+        refreshLectures();
+        setinputData({
           title: '',
           category: '',
           batch: '',
@@ -36,24 +46,16 @@ const CreateLecture = () => {
       });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setLectureData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   return (
     <div className="form">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleEnter}>
         <div>
           <label htmlFor="titleInput">Title</label>
-          <input type="text" id="titleInput" name="title" value={lectureData.title} onChange={handleChange} required />
+          <input type="text" id="titleInput" name="title" value={inputData.title} onChange={handlenew} />
         </div>
         <div>
           <label htmlFor="categoryInput">Category:</label>
-          <select id="categoryInput" name="category" value={lectureData.category} onChange={handleChange} required>
+          <select id="categoryInput" name="category" value={inputData.category} onChange={handlenew}>
             <option value="">Select Category</option>
             <option value="dsa">DSA</option>
             <option value="coding">Coding</option>
@@ -62,7 +64,7 @@ const CreateLecture = () => {
         </div>
         <div>
           <label htmlFor="batchInput">Batch:</label>
-          <select id="batchInput" name="batch" value={lectureData.batch} onChange={handleChange} required>
+          <select id="batchInput" name="batch" value={inputData.batch} onChange={handlenew}>
             <option value="">Select Batch</option>
             <option value="CAP-05">CAP-05</option>
             <option value="PT-WEB-16">PT-WEB-16</option>
@@ -77,9 +79,8 @@ const CreateLecture = () => {
             type="datetime-local"
             id="scheduleInput"
             name="schedule"
-            value={lectureData.schedule}
-            onChange={handleChange}
-            required
+            value={inputData.schedule}
+            onChange={handlenew}
           />
         </div>
         <div>
@@ -88,21 +89,20 @@ const CreateLecture = () => {
             type="datetime-local"
             id="concludeInput"
             name="conclude"
-            value={lectureData.conclude}
-            onChange={handleChange}
-            required
+            value={inputData.conclude}
+            onChange={handlenew}
           />
         </div>
         <div>
           <label htmlFor="userInput">User:</label>
-          <select id="userInput" name="user" value={lectureData.user} onChange={handleChange} required>
+          <select id="userInput" name="user" value={inputData.user} onChange={handlenew}>
             <option value="">Select User</option>
-            <option value="user1">User 1</option>
-            <option value="user2">User 2</option>
-            <option value="user3">User 3</option>
+            <option value="John">John</option>
+            <option value="Doe">Doe</option>
+            <option value="Jane">Jane</option>
           </select>
         </div>
-        <input type="submit" value="Submit" />
+        <button type="submit">Create</button>
       </form>
     </div>
   );

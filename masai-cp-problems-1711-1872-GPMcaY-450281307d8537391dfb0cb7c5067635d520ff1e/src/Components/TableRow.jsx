@@ -1,20 +1,14 @@
 import React from 'react';
 
-const TableRow = ({ lecture }) => {
+const TableRow = ({ lecture, refreshLectures }) => {
   const handleDelete = () => {
-    const requestOptions = {
+    fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures/${lecture.id}`, {
       method: 'DELETE',
-    };
-
-    fetch(`http://localhost:8080/lectures/${lecture.id}`, requestOptions)
+    })
       .then((response) => {
-        if (response.ok) {
-          console.log('Lecture deleted');
-          // Refresh the lecture data after successful deletion
-          window.location.reload();
-        } else {
-          console.error('Error:', response.status);
-        }
+        console.log('Delete Response:', response);
+        // Trigger a refresh of lectures after successful delete
+        refreshLectures();
       })
       .catch((error) => {
         console.error('Error:', error);

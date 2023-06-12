@@ -7,6 +7,10 @@ const ShowLectures = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
+    showLectures();
+  }, [currentPage]);
+
+  const showLectures = () => {
     fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/lectures?_page=${currentPage}&_limit=5`)
       .then((response) => {
         // Get the total number of lectures from the response headers
@@ -20,7 +24,7 @@ const ShowLectures = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, [currentPage]);
+  };
 
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -28,6 +32,10 @@ const ShowLectures = () => {
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handleRefreshLectures = () => {
+    showLectures();
   };
 
   return (
@@ -46,7 +54,7 @@ const ShowLectures = () => {
         </thead>
         <tbody>
           {lectures.map((lecture) => (
-            <TableRow key={lecture.id} lecture={lecture} />
+            <TableRow key={lecture.id} lecture={lecture} refreshLectures={handleRefreshLectures} />
           ))}
         </tbody>
       </table>
