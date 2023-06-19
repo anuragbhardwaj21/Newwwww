@@ -1,0 +1,112 @@
+{
+  "lectures": [
+    {
+      "id": 1,
+      "title": "Lecture 1",
+      "category": "dsa",
+      "batch": "CAP-05",
+      "schedule": "2023-06-01T09:00",
+      "conclude": "2023-06-01T10:30",
+      "user": "user1"
+    },
+    {
+      "id": 2,
+      "title": "Lecture 2",
+      "category": "coding",
+      "batch": "PT-WEB-16",
+      "schedule": "2023-06-02T14:00",
+      "conclude": "2023-06-02T15:30",
+      "user": "user2"
+    },
+    {
+      "id": 3,
+      "title": "Lecture 3",
+      "category": "da",
+      "batch": "CAP-04",
+      "schedule": "2023-06-03T11:00",
+      "conclude": "2023-06-03T12:30",
+      "user": "user3"
+    },
+    {
+      "id": 4,
+      "title": "Lecture 4",
+      "category": "dsa",
+      "batch": "FT-WEB-27",
+      "schedule": "2023-06-04T09:30",
+      "conclude": "2023-06-04T11:00",
+      "user": "user1"
+    },
+    {
+      "id": 5,
+      "title": "Lecture 5",
+      "category": "coding",
+      "batch": "CAP-03",
+      "schedule": "2023-06-05T13:00",
+      "conclude": "2023-06-05T14:30",
+      "user": "user2"
+    },
+    {
+      "id": 6,
+      "title": "Lecture 6",
+      "category": "da",
+      "batch": "CAP-05",
+      "schedule": "2023-06-06T10:30",
+      "conclude": "2023-06-06T12:00",
+      "user": "user3"
+    },
+    {
+      "id": 7,
+      "title": "Lecture 7",
+      "category": "dsa",
+      "batch": "PT-WEB-16",
+      "schedule": "2023-06-07T14:30",
+      "conclude": "2023-06-07T16:00",
+      "user": "user1"
+    },
+    {
+      "id": 8,
+      "title": "Lecture 8",
+      "category": "coding",
+      "batch": "CAP-04",
+      "schedule": "2023-06-08T12:00",
+      "conclude": "2023-06-08T13:30",
+      "user": "user2"
+    },
+    {
+      "id": 9,
+      "title": "Lecture 9",
+      "category": "da",
+      "batch": "FT-WEB-27",
+      "schedule": "2023-06-09T10:00",
+      "conclude": "2023-06-09T11:30",
+      "user": "user3"
+    },
+    {
+      "title": "asa",
+      "category": "dsa",
+      "batch": "asa",
+      "schedule": "asa",
+      "conclude": "asa",
+      "user": "asa",
+      "id": 10
+    },
+    {
+      "title": "asfda",
+      "category": "dsa",
+      "batch": "PT-WEB-16",
+      "schedule": "2023-06-12T22:21",
+      "conclude": "2023-06-12T22:21",
+      "user": "John",
+      "id": 11
+    },
+    {
+      "title": "afsa",
+      "category": "dsa",
+      "batch": "PT-WEB-16",
+      "schedule": "2023-06-12T22:23",
+      "conclude": "2023-06-12T22:23",
+      "user": "Jane",
+      "id": 12
+    }
+  ]
+}
