@@ -33,7 +33,7 @@ const TaskItem = ({ id, title, status }) => {
         {title}
       </div>
       <div data-testid="task-status" style={{ fontSize: "18px" }}>
-        Status: {status ? "Completed" : "Pending"}
+        {status ? "True" : "False"}
       </div>
       <div
         style={{

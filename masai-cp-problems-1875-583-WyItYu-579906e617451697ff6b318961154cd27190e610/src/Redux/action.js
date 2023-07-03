@@ -60,7 +60,7 @@ export const addTask = (task) => {
   return (dispatch) => {
     dispatch(addTaskRequest());
     axios
-      .post("/tasks", task)
+      .post(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/tasks`, task)
       .then((response) => {
         dispatch(addTaskSuccess(response.data));
       })
@@ -88,7 +88,7 @@ export const updateTask = (id, task) => {
   return (dispatch) => {
     dispatch(updateTaskRequest());
     axios
-      .patch(`/tasks/${id}`, task)
+      .patch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/tasks/${id}`, task)
       .then((response) => {
         dispatch(updateTaskSuccess(response.data));
       })
@@ -116,7 +116,7 @@ export const deleteTask = (id) => {
   return (dispatch) => {
     dispatch(deleteTaskRequest());
     axios
-      .delete(`/tasks/${id}`)
+      .delete(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/tasks/${id}`)
       .then(() => {
         dispatch(deleteTaskSuccess(id));
       })
