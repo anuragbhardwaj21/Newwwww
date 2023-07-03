@@ -2,10 +2,10 @@
   "name": "cypress-example-rct-211-b20-e1-usereducer",
   "version": "0.1.0",
   "private": true,
-   "engines":{
-      "npm":">=8.0.0 <9.0.0",
-      "node":"16.16.0"
-    },
+  "engines": {
+    "npm": ">=8.0.0 <9.0.0",
+    "node": "16.16.0"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -17,6 +17,7 @@
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
     "redux-thunk": "^2.4.1",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"

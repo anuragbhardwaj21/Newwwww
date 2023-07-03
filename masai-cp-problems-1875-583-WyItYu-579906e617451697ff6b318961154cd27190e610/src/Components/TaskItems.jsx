@@ -1,6 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { deleteTask } from "../Redux/action";
 
-const TaskItems = ({ id }) => {
+const TaskItem = ({ id, title, status }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteTask = () => {
+    dispatch(deleteTask(id));
+  };
+
   return (
     <div
       style={{
@@ -20,19 +29,27 @@ const TaskItems = ({ id }) => {
       <div
         data-testid="task-title"
         style={{ fontSize: "24px", fontWeight: "600" }}
-      ></div>
-      <div data-testid="task-status" style={{ fontSize: "18px" }}></div>
+      >
+        {title}
+      </div>
+      <div data-testid="task-status" style={{ fontSize: "18px" }}>
+        Status: {status ? "Completed" : "Pending"}
+      </div>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
         }}
       >
-        <button data-testid="edit-task">Edit</button>
-        <button data-testid="delete-task">Delete</button>
+        <Link to={`/edit/${id}`}>
+          <button data-testid="edit-task">Edit</button>
+        </Link>
+        <button data-testid="delete-task" onClick={handleDeleteTask}>
+          Delete
+        </button>
       </div>
     </div>
   );
 };
 
-export default TaskItems;
+export default TaskItem;
