@@ -1,14 +1,17 @@
-export const Card = () => {
+import { Link } from 'react-router-dom';
+
+export const Card = ({ id, name, age, grade }) => {
   return (
     <div data-cy="student-card">
-      <h3 data-cy="student-name">Name: {"student name"}</h3>
+      <h3 data-cy="student-name">Name: {name}</h3>
 
       <div>
-        <h4 data-cy="student-age">Age: {"student age"}</h4>
-        <h4 data-cy="student-grade">Grade: {"studen grade"}</h4>
+        <h4 data-cy="student-age">Age: {age}</h4>
+        <h4 data-cy="student-grade">Grade: {grade}</h4>
       </div>
 
-      <button data-cy="view-dtl-btn">View Details</button>
+      <Link to={`/details/${id}`} data-cy="view-dtl-btn">View Details</Link>
     </div>
   );
 };
+export default Card
